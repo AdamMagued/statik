@@ -373,6 +373,6 @@ func toSymbolSafe(str string) string {
 }
 
 func help() {
-	fmt.Println(helpText)
+	fmt.Print(helpText)
 	os.Exit(1)
 }
