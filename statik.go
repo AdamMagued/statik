@@ -22,7 +22,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path"
 	spath "path"
@@ -190,7 +189,7 @@ func generateSource(srcPath string, includes string) (file *os.File, err error) 
 	)
 
 	zipWriter = &buffer
-	f, err := ioutil.TempFile("", namePackage)
+	f, err := os.CreateTemp("", namePackage)
 	if err != nil {
 		return
 	}
@@ -214,7 +213,7 @@ func generateSource(srcPath string, includes string) (file *os.File, err error) 
 		if err != nil {
 			return err
 		}
-		b, err := ioutil.ReadFile(path)
+		b, err := os.ReadFile(path)
 		if err != nil {
 			return err
 		}
@@ -302,7 +301,7 @@ func init() {
 	`, assetNamespace)
 	}
 
-	if err = ioutil.WriteFile(f.Name(), qb.Bytes(), 0644); err != nil {
+	if err = os.WriteFile(f.Name(), qb.Bytes(), 0644); err != nil {
 		return
 	}
 	return f, nil

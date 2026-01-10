@@ -49,6 +49,8 @@ You can also read the content of a single file:
 
 ~~~ go
 import (
+  "io"
+
   "github.com/rakyll/statik/fs"
 
   _ "./statik" // TODO: Replace with the absolute import path
@@ -67,7 +69,7 @@ import (
     log.Fatal(err)
   }    
   defer r.Close()
-  contents, err := ioutil.ReadAll(r)
+  contents, err := io.ReadAll(r)
   if err != nil {
     log.Fatal(err)
   }

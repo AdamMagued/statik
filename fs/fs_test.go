@@ -18,7 +18,6 @@ import (
 	"bytes"
 	"errors"
 	"io"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -254,9 +253,9 @@ func TestOpen(t *testing.T) {
 					continue
 				}
 				if !wantFile.isDir {
-					b, err := ioutil.ReadAll(f)
+					b, err := io.ReadAll(f)
 					if err != nil {
-						t.Errorf("ioutil.ReadAll(%v) = %v", name, err)
+						t.Errorf("io.ReadAll(%v) = %v", name, err)
 						continue
 					}
 					if !reflect.DeepEqual(wantFile.data, b) {
@@ -434,9 +433,9 @@ func TestOpen_Parallel(t *testing.T) {
 				t.Errorf("fs.Open(%v) = %v", name, err)
 				return
 			}
-			b, err := ioutil.ReadAll(f)
+			b, err := io.ReadAll(f)
 			if err != nil {
-				t.Errorf("ioutil.ReadAll(%v) = %v", name, err)
+				t.Errorf("io.ReadAll(%v) = %v", name, err)
 				return
 			}
 			if !reflect.DeepEqual(indexHTMLData, b) {
@@ -467,7 +466,7 @@ func mustZipTree(srcPath string) string {
 		if err != nil {
 			return err
 		}
-		b, err := ioutil.ReadFile(path)
+		b, err := os.ReadFile(path)
 		if err != nil {
 			return err
 		}
@@ -494,7 +493,7 @@ func mustZipTree(srcPath string) string {
 
 // mustReadFile returns the file contents. Panics on any errors.
 func mustReadFile(filename string) []byte {
-	b, err := ioutil.ReadFile(filename)
+	b, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}
